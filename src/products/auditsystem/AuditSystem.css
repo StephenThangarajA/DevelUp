@@ -1,0 +1,156 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--neutral-50);
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 70px;
+  padding: 24px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 70px;
+    padding: 16px;
+  }
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-red);
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background-color: var(--accent-green);
+  color: var(--white);
+}
+
+.btn-success:hover {
+  filter: brightness(0.95);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+}
+
+.btn-warning {
+  background-color: var(--accent-orange);
+  color: var(--white);
+}
+
+.btn-warning:hover {
+  filter: brightness(0.95);
+}
+
+.as-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.3s ease;
+  border: 1px solid var(--neutral-100);
+}
+
+.as-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.as-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.as-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--neutral-900);
+}
+
+.as-input-group {
+  margin-bottom: 20px;
+}
+
+.as-input-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--neutral-700);
+}
+
+.as-input-field {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.as-input-field:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+.as-status-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.as-status-completed {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: var(--accent-green);
+}
+
+.as-status-active {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: var(--accent-orange);
+}
+
+.as-status-pending {
+  background-color: rgba(220, 38, 38, 0.08);
+  color: var(--primary-red);
+}
+
+.as-status-critical {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: var(--primary-red);
+}

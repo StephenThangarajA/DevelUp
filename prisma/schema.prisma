@@ -1,0 +1,325 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       Int                       @id @default(autoincrement())
+  email                    String                    @unique
+  passwordHash             String
+  name                     String?
+  role                     Role
+  company                  String?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  aptitude_mentor_progress aptitude_mentor_progress?
+  productTrials            ProductTrial[]
+  resumes                  Resume[]
+  startupSolutions         StartupSolution[]
+  studentSolutions         StudentSolution[]
+
+  @@map("users")
+}
+
+model StartupSolution {
+  id          Int                @id @default(autoincrement())
+  ownerId     Int
+  name        String
+  description String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  audit       AuditWorkspace?
+  helpdesk    HelpdeskWorkspace?
+  payroll     PayrollWorkspace?
+  owner       User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId])
+  @@map("startup_solutions")
+}
+
+model StudentSolution {
+  id        Int      @id @default(autoincrement())
+  ownerId   Int
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId])
+  @@map("student_solutions")
+}
+
+model Product {
+  id             Int            @id @default(autoincrement())
+  key            String         @unique
+  name           String         @unique
+  type           String
+  trialDays      Int?
+  trialUnitLimit Int?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  trials         ProductTrial[]
+
+  @@map("products")
+}
+
+model ProductTrial {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  productId     Int
+  startedAt     DateTime @default(now())
+  expiresAt     DateTime
+  consumedUnits Int      @default(0)
+  limitUnits    Int
+  active        Boolean  @default(true)
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, active])
+  @@index([userId])
+  @@index([productId])
+  @@map("product_trials")
+}
+
+model HelpdeskWorkspace {
+  id         Int             @id @default(autoincrement())
+  solutionId Int             @unique
+  agents     Agent[]
+  customers  Customer[]
+  solution   StartupSolution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+  tickets    Ticket[]
+
+  @@map("helpdesk_workspaces")
+}
+
+model Agent {
+  id              Int               @id @default(autoincrement())
+  workspaceId     Int
+  name            String
+  email           String
+  role            String
+  department      String?
+  status          String?
+  activeTickets   Int               @default(0)
+  resolvedTickets Int               @default(0)
+  phone           String?
+  notes           String?
+  workspace       HelpdeskWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  tickets         Ticket[]          @relation("TicketAssignee")
+
+  @@index([workspaceId])
+  @@map("agents")
+}
+
+model Customer {
+  id           Int               @id @default(autoincrement())
+  workspaceId  Int
+  name         String
+  email        String
+  phone        String?
+  company      String?
+  address      String?
+  notes        String?
+  ticketsCount Int               @default(0)
+  lastContact  DateTime?
+  createdAt    DateTime          @default(now())
+  workspace    HelpdeskWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  tickets      Ticket[]
+
+  @@index([workspaceId])
+  @@map("customers")
+}
+
+model Ticket {
+  id          Int               @id @default(autoincrement())
+  workspaceId Int
+  code        String            @unique
+  title       String
+  description String?
+  status      String
+  priority    String
+  category    String?
+  customerId  Int?
+  assigneeId  Int?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  assignee    Agent?            @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  customer    Customer?         @relation(fields: [customerId], references: [id])
+  workspace   HelpdeskWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([customerId])
+  @@index([assigneeId])
+  @@map("tickets")
+}
+
+model AuditWorkspace {
+  id         Int             @id @default(autoincrement())
+  solutionId Int             @unique
+  settings   AuditSettings?
+  solution   StartupSolution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+  audits     Audit[]
+
+  @@map("audit_workspaces")
+}
+
+model Audit {
+  id          Int            @id @default(autoincrement())
+  workspaceId Int
+  title       String
+  client      String
+  status      String
+  startDate   DateTime?
+  dueDate     DateTime?
+  auditor     String?
+  description String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  workspace   AuditWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  findings    Finding[]
+
+  @@index([workspaceId])
+  @@map("audits")
+}
+
+model Finding {
+  id          Int       @id @default(autoincrement())
+  auditId     Int
+  title       String
+  severity    String
+  status      String
+  assignee    String?
+  description String?
+  date        DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  audit       Audit     @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  @@index([auditId])
+  @@map("findings")
+}
+
+model AuditSettings {
+  id                 Int            @id @default(autoincrement())
+  workspaceId        Int            @unique
+  fullName           String         @default("")
+  email              String         @default("")
+  jobTitle           String         @default("")
+  department         String         @default("")
+  emailNotifications Boolean        @default(true)
+  dueDateReminders   Boolean        @default(true)
+  criticalAlerts     Boolean        @default(true)
+  autoSave           Boolean        @default(true)
+  defaultView        String         @default("Dashboard")
+  itemsPerPage       String         @default("25")
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  workspace          AuditWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("audit_settings")
+}
+
+model PayrollWorkspace {
+  id         Int             @id @default(autoincrement())
+  solutionId Int             @unique
+  employees  Employee[]
+  solution   StartupSolution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+  payslips   Payslip[]
+  settings   Settings?
+
+  @@map("payroll_workspaces")
+}
+
+model Employee {
+  id          Int              @id @default(autoincrement())
+  workspaceId Int
+  name        String
+  email       String           @unique
+  position    String
+  department  String
+  baseSalary  Float
+  allowances  Float            @default(0)
+  deductions  Float            @default(0)
+  joinDate    DateTime         @db.Date
+  status      String           @default("active")
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  workspace   PayrollWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  payslips    Payslip[]
+
+  @@index([workspaceId])
+  @@map("employees")
+}
+
+model Payslip {
+  id            Int              @id @default(autoincrement())
+  workspaceId   Int
+  employeeId    Int
+  month         String
+  baseSalary    Float
+  allowances    Float
+  deductions    Float
+  netSalary     Float
+  generatedDate DateTime         @db.Date
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  employee      Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  workspace     PayrollWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([employeeId])
+  @@map("payslips")
+}
+
+model Settings {
+  id                 Int              @id @default(autoincrement())
+  workspaceId        Int              @unique
+  companyName        String           @default("TechCorp Solutions")
+  companyAddress     String           @default("")
+  taxRate            Float            @default(0.15)
+  pfRate             Float            @default(0.12)
+  healthInsurance    Float            @default(500)
+  currency           String           @default("USD")
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  email              String?
+  phoneNumber        String?
+  registrationNumber String?          @default("")
+  workspace          PayrollWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("settings")
+}
+
+model Resume {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("resumes")
+}
+
+model aptitude_mentor_progress {
+  id                 Int      @id @default(autoincrement())
+  userId             Int      @unique
+  activeTab          String   @default("practice")
+  completedSubtopics Json     @default("{}")
+  learnedSubtopics   Json     @default("{}")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime
+  users              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum Role {
+  STARTUP_ADMIN
+  STUDENT
+}

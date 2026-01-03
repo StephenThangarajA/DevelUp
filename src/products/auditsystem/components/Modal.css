@@ -1,0 +1,83 @@
+.as-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.as-modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--neutral-100);
+}
+
+.as-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0 24px;
+  border-bottom: 1px solid var(--neutral-200);
+  margin-bottom: 24px;
+}
+
+.as-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin: 0;
+}
+
+.as-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--neutral-600);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.as-modal-close:hover {
+  background-color: var(--neutral-100);
+}
+
+.as-modal-body {
+  padding: 0 24px 24px 24px;
+}
+
+@media (max-width: 768px) {
+  .as-modal-overlay {
+    padding: 10px;
+  }
+  
+  .as-modal-content {
+    max-height: 95vh;
+  }
+  
+  .as-modal-header {
+    padding: 16px 16px 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .as-modal-body {
+    padding: 0 16px 16px 16px;
+  }
+}

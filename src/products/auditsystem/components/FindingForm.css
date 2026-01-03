@@ -1,0 +1,37 @@
+.as-finding-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.as-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.as-full-width {
+  grid-column: 1 / -1;
+}
+
+.as-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.as-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .as-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .as-form-actions {
+    flex-direction: column-reverse;
+  }
+}

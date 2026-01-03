@@ -1,0 +1,417 @@
+.payroll {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.payroll-header {
+  text-align: center;
+}
+
+.payroll-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.payroll-header p {
+  color: var(--gray-600);
+}
+
+.payroll-config {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--gray-100);
+  padding: 1.5rem;
+}
+
+.payroll-config h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+}
+
+.payroll-config-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .payroll-config-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.payroll-config-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.payroll-config-field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.payroll-config-field select,
+.payroll-config-field input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.payroll-config-field select:focus,
+.payroll-config-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.calendar-input-container {
+  position: relative;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--gray-500);
+  pointer-events: none;
+}
+
+.calendar-input {
+  padding-right: 2.5rem;
+}
+
+.date-error {
+  color: var(--primary-red);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.selected-month {
+  color: var(--primary-red);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.payroll-stat-card {
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.payroll-stat-card.red {
+  background-color: var(--bg-red-50);
+}
+
+.payroll-stat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payroll-stat-header svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.payroll-stat-header.blue svg {
+  color: var(--primary-red);
+}
+
+.payroll-stat-header.red svg {
+  color: var(--primary-red);
+}
+
+.payroll-stat-header span {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.payroll-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.payroll-stat-value.blue {
+  color: var(--primary-red);
+}
+
+.payroll-stat-value.red {
+  color: var(--primary-red);
+}
+
+.payroll-process-btn {
+  width: 100%;
+  background: var(--primary-red);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.payroll-process-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.payroll-process-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.payroll-process-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.payroll-employees {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--gray-100);
+  padding: 1.5rem;
+}
+
+.payroll-employees-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.payroll-employees-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.payroll-select-all {
+  color: var(--primary-red);
+  background: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.payroll-select-all:hover {
+  color: var(--secondary-red);
+}
+
+.payroll-employees-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .payroll-employees-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .payroll-employees-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.payroll-employee-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--gray-200);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payroll-employee-card:hover {
+  border-color: var(--gray-300);
+  transform: scale(1.05);
+}
+
+.payroll-employee-card.selected {
+  border-color: var(--primary-red);
+  background-color: #fef2f2;
+}
+
+.payroll-employee-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.payroll-employee-avatar {
+  width: 3rem;
+  height: 3rem;
+  background: var(--primary-red);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+}
+
+.payroll-employee-info {
+  flex: 1;
+}
+
+.payroll-employee-info h4 {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.payroll-employee-info .position {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.payroll-employee-info .salary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary-red);
+}
+
+.payroll-employee-check {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary-red);
+}
+
+.payroll-status {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--gray-100);
+  padding: 1.5rem;
+}
+
+.payroll-status h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 1rem;
+}
+
+.payroll-progress {
+  margin-bottom: 1rem;
+}
+
+.payroll-progress-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.payroll-progress-indicator {
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--primary-red);
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.payroll-progress-text {
+  color: var(--primary-red);
+  font-weight: 500;
+}
+
+.payroll-progress-bar {
+  width: 100%;
+  background-color: var(--gray-200);
+  border-radius: 9999px;
+  height: 0.5rem;
+}
+
+.payroll-progress-fill {
+  height: 0.5rem;
+  background: var(--primary-red);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.payroll-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payroll-status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f0fdf4;
+  border-radius: 0.75rem;
+}
+
+.payroll-status-item svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--primary-red);
+}
+
+.payroll-status-item .employee-name {
+  flex: 1;
+  color: var(--gray-900);
+}
+
+.payroll-status-item .status-text {
+  font-size: 0.875rem;
+  color: var(--primary-red);
+  font-weight: 500;
+}
+
+.payroll-success {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #dcfce7;
+  border-radius: 1rem;
+}
+
+.payroll-success-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payroll-success-content svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primary-red);
+}
+
+.payroll-success-content span {
+  color: var(--primary-red);
+  font-weight: 600;
+}

@@ -1,0 +1,416 @@
+.employees {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.employees-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .employees-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.employees-header-info h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.employees-header-info p {
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+}
+
+.employees-add-btn {
+  background: var(--primary-red);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.employees-add-btn:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.employees-add-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.employees-search {
+  position: relative;
+}
+
+.employees-search svg {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--gray-400);
+}
+
+.employees-search input {
+  width: 100%;
+  padding: 0.75rem 0.5rem 0.75rem 2.5rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.employees-search input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.employees-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .employees-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .employees-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.employee-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--gray-100);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  animation: slideUp 0.3s ease-out;
+}
+
+.employee-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.employee-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.employee-avatar {
+  width: 3rem;
+  height: 3rem;
+  background: var(--primary-red);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employee-avatar svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+}
+
+.employee-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.employee-action-btn {
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.employee-action-btn.edit {
+  color: var(--primary-red);
+}
+
+.employee-action-btn.edit:hover {
+  background-color: #fef2f2;
+}
+
+.employee-action-btn.delete {
+  color: var(--primary-red);
+}
+
+.employee-action-btn.delete:hover {
+  background-color: #fef2f2;
+}
+
+.employee-action-btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.employee-info h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.employee-info .emp-email {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.employee-info .position {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary-red);
+}
+
+.employee-info .department {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.employee-salary {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--gray-100);
+  margin-top: 0.75rem;
+}
+
+.employee-salary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.employee-salary-row:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+
+.employee-salary-row .label {
+  color: var(--gray-600);
+}
+
+.employee-salary-row .base-salary {
+  font-weight: 700;
+  color: var(--primary-red);
+}
+
+.employee-salary-row .net-salary {
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.employee-status {
+  margin-top: 0.5rem;
+}
+
+.employee-status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.employee-status-badge.active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.employee-status-badge.inactive {
+  background-color: #fef2f2;
+  color: #991b1b;
+}
+
+.employees-empty {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.employees-empty svg {
+  width: 4rem;
+  height: 4rem;
+  color: var(--gray-300);
+  margin: 0 auto 0.5rem;
+}
+
+.employees-empty h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.employees-empty p {
+  color: var(--gray-600);
+}
+
+/* Delete Dialog Styles */
+.delete-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.delete-dialog {
+  background: white;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.delete-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.delete-dialog-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+.delete-dialog-close {
+  background: transparent;
+  border: none;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.delete-dialog-close:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.delete-dialog-close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.delete-dialog-content {
+  padding: 1.5rem;
+}
+
+.delete-dialog-content p {
+  margin: 0 0 1rem;
+  color: var(--gray-700);
+}
+
+.delete-employee-info {
+  background-color: var(--gray-50);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.delete-employee-info .employee-name {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.delete-employee-info .employee-email {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.delete-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.delete-dialog-cancel {
+  border: 1px solid var(--primary-red);
+  background-color: var(--gray-100);
+  color: var(--primary-red);
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-dialog-cancel:hover {
+  background-color: var(--gray-200);
+}
+
+.delete-dialog-confirm {
+  background-color: var(--primary-red);
+  color: white;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-dialog-confirm:hover {
+  background-color: var(--secondary-red);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

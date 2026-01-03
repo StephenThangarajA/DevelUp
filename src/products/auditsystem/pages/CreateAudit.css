@@ -1,0 +1,245 @@
+/* Create Audit Page Styles - Same as Create Finding */
+.as-create-audit-page {
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.as-create-audit-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.as-create-audit-header {
+  margin-bottom: 2rem;
+}
+
+.as-back-link {
+  display: inline-flex;
+  align-items: center;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  transition: color 0.2s ease;
+}
+
+.as-back-link:hover {
+  color: #475569;
+}
+
+.as-create-audit-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.as-create-audit-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.as-create-audit-form-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.as-create-audit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.as-form-section {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 2rem;
+}
+
+.as-form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.as-form-section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.as-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.as-form-group:last-child {
+  margin-bottom: 0;
+}
+
+.as-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.as-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.as-form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.as-form-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.as-form-input.error {
+  border-color: #ef4444;
+}
+
+.as-form-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.as-form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  background-color: white;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s ease;
+}
+
+.as-form-textarea:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.as-error-message {
+  display: block;
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 0.25rem;
+}
+
+.as-error-alert {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.as-form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-red);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-red);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .as-create-audit-container {
+    padding: 0 0.5rem;
+  }
+  
+  .as-create-audit-form-card {
+    padding: 1.5rem;
+  }
+  
+  .as-form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .as-form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .as-create-audit-page {
+    padding: 1rem 0;
+  }
+  
+  .as-create-audit-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .as-create-audit-form-card {
+    padding: 1rem;
+  }
+  
+  .as-form-section h3 {
+    font-size: 1rem;
+  }
+}

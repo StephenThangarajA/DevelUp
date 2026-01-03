@@ -1,0 +1,33 @@
+.as-audit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.as-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.as-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.as-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .as-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .as-form-actions {
+    flex-direction: column-reverse;
+  }
+}

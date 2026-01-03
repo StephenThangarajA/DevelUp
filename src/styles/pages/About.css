@@ -1,0 +1,366 @@
+/* About Page Styles */
+
+/* Page Header */
+.page-header {
+  padding: 120px 0 60px;
+  background: linear-gradient(135deg, var(--neutral-50) 0%, rgba(220, 38, 38, 0.05) 100%);
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--neutral-900);
+  margin-bottom: 16px;
+}
+
+.page-header p {
+  font-size: 20px;
+  color: var(--neutral-600);
+}
+
+/* Mission Section */
+.mission-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.mission-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.mission-text h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--neutral-900);
+  margin-bottom: 24px;
+}
+
+.mission-text p {
+  font-size: 18px;
+  color: var(--neutral-600);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.mission-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.stat-card {
+  background: white;
+  padding: 32px 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+}
+
+.stat-card .stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary-red);
+  margin-bottom: 8px;
+}
+
+.stat-card .stat-label {
+  font-size: 14px;
+  color: var(--neutral-600);
+  font-weight: 500;
+}
+
+/* Values Section */
+.values-section {
+  padding: 80px 0;
+  background: var(--neutral-50);
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.value-card {
+  background: white;
+  padding: 40px 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.innovation-icon {
+  background: var(--primary-red);
+}
+
+.integrity-icon {
+  background: #3b82f6;
+}
+
+.excellence-icon {
+  background: #f59e0b;
+}
+
+.collaboration-icon {
+  background: #10b981;
+}
+
+.value-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  color: var(--neutral-600);
+  line-height: 1.6;
+}
+
+/* Team Section */
+.team-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.team-member {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+  transition: all 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.member-photo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--neutral-100);
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member-info h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 4px;
+}
+
+.member-role {
+  color: var(--primary-red);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.member-bio {
+  color: var(--neutral-600);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Timeline Section */
+.timeline-section {
+  padding: 80px 0;
+  background: var(--neutral-50);
+}
+
+.timeline {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--neutral-200);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.timeline-year {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-red);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  position: relative;
+  z-index: 2;
+  margin: 0 40px;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  max-width: 300px;
+}
+
+.timeline-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 8px;
+}
+
+.timeline-content p {
+  color: var(--neutral-600);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 80px 0;
+  background: var(--neutral-100);
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--primary-red);
+}
+
+.cta-content p {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  color: var(--primary-red);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.cta-buttons .primary-button {
+  background: var(--primary-red);
+  color: white;
+  text-decoration: none;
+}
+
+.cta-buttons .secondary-button {
+  background: transparent;
+  color: var(--primary-red);
+  border: 2px solid var(--primary-red);
+  text-decoration: none;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .mission-content {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 32px;
+  }
+  
+  .mission-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .mission-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .timeline::before {
+    left: 20px;
+  }
+  
+  .timeline-item {
+    flex-direction: row !important;
+    padding-left: 60px;
+  }
+  
+  .timeline-year {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
+  
+  .timeline-content {
+    max-width: none;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-buttons .primary-button,
+  .cta-buttons .secondary-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mission-stats {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,357 @@
+.payslip-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.payslip-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payslip-detail-header-info h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+}
+
+.payslip-detail-header-info p {
+  color: white;
+  margin-top: 0.25rem;
+}
+
+.payslip-detail-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.payslip-detail-btn {
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.payslip-detail-btn:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.payslip-detail-btn.print {
+  background: var(--primary-red);
+  color: white;
+}
+
+.payslip-detail-btn.download {
+  background: var(--primary-red);
+  color: white;
+}
+
+.payslip-detail-btn.close {
+  padding: 0.5rem;
+  color: white;
+  background: none;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.payslip-detail-btn.close:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.payslip-detail-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.payslip-document {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--gray-200);
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.payslip-document-header {
+  background: var(--primary-red);
+  color: white;
+  padding: 2rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.payslip-document-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.payslip-company-info h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.payslip-company-info p {
+  color: white;
+}
+
+.payslip-document-info {
+  text-align: right;
+}
+
+.payslip-document-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.payslip-document-info p {
+  color: white;
+}
+
+.payslip-employee-section {
+  padding: 2rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.payslip-employee-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .payslip-employee-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.payslip-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.payslip-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payslip-info-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payslip-info-row .label {
+  color: var(--gray-600);
+}
+
+.payslip-info-row .value {
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.payslip-status-badge {
+  display: inline-block;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.payslip-salary-section {
+  padding: 2rem;
+}
+
+.payslip-salary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .payslip-salary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.payslip-earnings,
+.payslip-deductions {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.payslip-earnings {
+  background-color: #f0fdf4;
+}
+
+.payslip-deductions {
+  background-color: #fef2f2;
+}
+
+.payslip-section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.payslip-section-header-green {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: #166534;
+  font-weight: 600;
+}
+
+.payslip-section-header-red {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: var(--primary-red);
+  font-weight: 600;
+}
+
+.payslip-section-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.payslip-section-indicator.red {
+  background-color: var(--primary-red);
+}
+
+.payslip-section-indicator.red {
+  background-color: var(--primary-red);
+}
+
+.payslip-breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.payslip-breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payslip-breakdown-item .label {
+  color: var(--gray-700);
+}
+
+.payslip-breakdown-item .value {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.payslip-breakdown-item .earnings {
+  color: var(--color-green-700);
+}
+
+.payslip-breakdown-item .deductions {
+  color: var(--primary-red);
+}
+
+.payslip-breakdown-total {
+  border-top: 1px solid;
+  padding-top: 0.75rem;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
+.payslip-breakdown-total.red {
+  border-color: #bbf7d0;
+}
+
+.payslip-breakdown-total.red {
+  border-color: #fecaca;
+}
+
+.payslip-breakdown-total .label {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.payslip-breakdown-total .value {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.payslip-breakdown-total .earnings {
+  color: var(--color-green-700);
+}
+
+.payslip-breakdown-total .deductions {
+  color: var(--primary-red);
+}
+
+.payslip-net-salary {
+  margin-top: 2rem;
+  background: var(--primary-red);
+  border-radius:0.5rem;
+  padding: 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+.payslip-net-salary h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.payslip-net-salary .amount {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.payslip-net-salary .breakdown {
+  color: white;
+  margin-top: 0.25rem;
+}
+
+.payslip-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.payslip-footer p:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+
+@media print {
+  .payslip-detail-header,
+  .payslip-detail-actions {
+    display: none;
+  }
+  
+  .payslip-document {
+    box-shadow: none;
+    border: none;
+  }
+  
+  .payslip-document-header {
+    border-radius: 0;
+  }
+}

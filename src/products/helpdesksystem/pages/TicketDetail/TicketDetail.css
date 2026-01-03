@@ -1,0 +1,352 @@
+/* Ticket Detail Page Styles */
+.ticket-detail-page {
+  background: #ffffff;
+  min-height: calc(100vh - 80px);
+}
+
+.ticket-detail-header {
+  margin-bottom: 32px;
+}
+
+.header-nav {
+  margin-bottom: 16px;
+}
+
+.back-link {
+  color: var(--primary-red);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--secondary-red);
+}
+
+.ticket-head{
+  display: flex;
+  flex-direction: column;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-info h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.header-badges {
+  display: flex;
+}
+
+.header-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+.ticket-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 32px;
+}
+
+.ticket-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ticket-info-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+}
+
+.ticket-info-card h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 16px;
+}
+
+.ticket-description {
+  color: var(--neutral-600);
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+}
+
+.edit-form .form-group {
+  margin-bottom: 20px;
+  position: relative; /* Add position relative for z-index to work */
+  z-index: 1;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  color: var(--neutral-900);
+  border-color: var(--neutral-900);
+}
+
+.form-group select {
+  -webkit-appearance: menulist-button;
+  -moz-appearance: menulist-button;
+  appearance: menulist-button;
+}
+
+.edit-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Comments Section */
+.comments-section {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+}
+
+.comments-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.comment {
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--neutral-200);
+}
+
+.comment.comment {
+  background: var(--neutral-50);
+  border-left-color: var(--primary-red);
+}
+
+.comment.system {
+  background: rgba(59, 130, 246, 0.05);
+  border-left-color: var(--accent-blue);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--neutral-900);
+  font-size: 14px;
+}
+
+.comment-time {
+  color: var(--neutral-500);
+  font-size: 12px;
+}
+
+.comment-content {
+  color: var(--neutral-700);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.add-comment-form {
+  border-top: 1px solid var(--neutral-100);
+  padding-top: 24px;
+}
+
+.add-comment-form .form-group {
+  margin-bottom: 16px;
+}
+
+.add-comment-form .btn {
+  align-self: flex-start;
+}
+
+/* Sidebar */
+.ticket-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ticket-meta-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+}
+
+.ticket-meta-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--neutral-100);
+  gap: 16px;
+}
+
+.meta-item:last-child {
+  border-bottom: none;
+}
+
+.meta-label {
+  font-weight: 500;
+  color: var(--neutral-500);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.meta-value {
+  color: var(--neutral-700);
+  font-size: 14px;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-100);
+}
+
+.error-state h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 12px;
+}
+
+.error-state p {
+  color: var(--neutral-600);
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .ticket-detail-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .ticket-sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    justify-content: stretch;
+  }
+  
+  .header-actions .btn,
+  .status-actions .btn,
+  .edit-actions .btn {
+    flex: 1;
+  }
+  
+  .ticket-info-card,
+  .comments-section,
+  .ticket-meta-card {
+    padding: 24px;
+  }
+  
+  .header-info h1 {
+    font-size: 28px;
+  }
+  
+  .edit-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-info h1 {
+    font-size: 24px;
+  }
+  
+  .header-badges {
+    flex-wrap: wrap;
+  }
+  
+  .ticket-info-card,
+  .comments-section,
+  .ticket-meta-card {
+    padding: 20px;
+  }
+  
+  .status-actions,
+  .edit-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .meta-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .meta-value {
+    text-align: left;
+  }
+}
+
+.add-comment-form textarea.form-control {
+  color: var(--neutral-900); /* Ensure text is visible */
+}

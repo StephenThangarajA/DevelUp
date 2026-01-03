@@ -1,0 +1,117 @@
+/* FindingsSummary.css */
+.as-findings-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.as-findings-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.as-finding-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.as-finding-bar {
+  flex: 1;
+  height: 24px;
+  background: var(--neutral-100);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.as-finding-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.3s ease;
+}
+
+.as-finding-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 60px;
+}
+
+.as-finding-severity {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--neutral-600);
+}
+
+.as-finding-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.as-recent-findings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.as-recent-finding-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.as-recent-finding-item:last-child {
+  border-bottom: none;
+}
+
+.as-recent-finding-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.as-recent-finding-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--neutral-800);
+  margin-bottom: 4px;
+}
+
+.as-recent-finding-audit {
+  font-size: 13px;
+  color: var(--neutral-500);
+}
+
+.as-recent-finding-severity {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.as-recent-finding-severity.critical {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: var(--primary-red);
+}
+
+.as-recent-finding-severity.high {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: var(--accent-orange);
+}
+
+.as-recent-finding-severity.medium {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: var(--accent-blue);
+}
+
+.as-recent-finding-severity.low {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: var(--accent-green);
+}
