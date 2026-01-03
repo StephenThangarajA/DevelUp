@@ -92,8 +92,8 @@ export default function Home() {
   const goPayRollSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('payroll'); navigate('/payrollsystem'); });
   const goHelpDeskSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('helpdesk'); navigate('/helpdesksystem'); });
   const goAuditSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('audit'); navigate('/auditsystem'); });
-  const goAptitudeMentor = () => requireAuth('STUDENT', async () => { await startTrial('aptitude'); navigate('/aptitudementor'); });
-  const goMockAssesment = () => requireAuth('STUDENT', async () => { await startTrial('mockassessment'); navigate('/mockassessment'); });
+  const goAptitudeMentor = () => requireAuth('STUDENT', async () => { await startTrial('aptitudementor'); navigate('/aptitudementor'); });
+  const goMockAssesment = () => requireAuth('STUDENT', async () => { await startTrial('mockassesment'); navigate('/mockassesment'); });
 
   const handleStartJourneyClick = () => {
     navigate('/login');
