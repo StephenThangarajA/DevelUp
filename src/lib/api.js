@@ -89,3 +89,16 @@ export const students = {
     save: (data) => apiPost("/students/resume", data)
   }
 };
+
+export const aptitudeMentor = {
+  progress: {
+    get: () => apiGet("/aptitude-mentor/progress"),
+    save: (data) => apiPost("/aptitude-mentor/progress", data)
+  }
+};
+
+export const mockAssessment = {
+  list: () => apiGet("/mock-assessment"),
+  create: (data) => apiPost("/mock-assessment", data),
+  submit: (id, data) => apiPost(`/mock-assessment/${id}/submit`, data)
+};

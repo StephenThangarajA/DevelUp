@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/ca
 import { Button } from '../../components/ui/button';
 import { ChevronLeft, BookOpen, Lightbulb, CheckCircle2 } from 'lucide-react';
 import { LEARN_CONTENT } from './learncontent';
+import { aptitudeMentor } from '../../lib/api';
 
 export default function LearnPage() {
   const { mainTopic, subTopic } = useParams();
@@ -175,14 +176,23 @@ export default function LearnPage() {
           </Button>
           <Button
             size="lg"
-            onClick={() => {
-              const learned = JSON.parse(localStorage.getItem('learnedSubtopics') || '{}');
-              if (!learned[mainTopic]) learned[mainTopic] = [];
-              if (!learned[mainTopic].includes(subTopic)) {
-                learned[mainTopic].push(subTopic);
-                localStorage.setItem('learnedSubtopics', JSON.stringify(learned));
+            onClick={async () => {
+              try {
+                const progress = await aptitudeMentor.progress.get();
+                const learned = progress.learnedSubtopics || {};
+                if (!learned[mainTopic]) learned[mainTopic] = [];
+                if (!learned[mainTopic].includes(subTopic)) {
+                  learned[mainTopic].push(subTopic);
+                  await aptitudeMentor.progress.save({ 
+                    learnedSubtopics: learned,
+                    activeTab: 'learn'
+                  });
+                } else {
+                  await aptitudeMentor.progress.save({ activeTab: 'learn' });
+                }
+              } catch (err) {
+                console.error('Error saving learned progress to DB:', err);
               }
-              localStorage.setItem('aptitudeActiveTab', 'learn');
               navigate('/aptitudementor');
             }}
             className="w-full sm:w-auto bg-gray-900 hover:bg-black text-white px-12 py-6 text-lg font-bold rounded-full shadow-2xl transform transition hover:scale-105"

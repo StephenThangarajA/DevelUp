@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { mockAssessment } from '../../../lib/api';
 
 const MockAssessmentContext = createContext(null);
 
@@ -20,32 +21,53 @@ export const MockAssessmentProvider = ({ children }) => {
     recentAssessments: []
   });
 
-  // Load data from localStorage on mount
+  // Load data from DB on mount
   useEffect(() => {
-    const savedAssessments = localStorage.getItem('mockAssessments');
-    const savedPerformance = localStorage.getItem('mockAssessmentPerformance');
+    const loadData = async () => {
+      try {
+        const data = await mockAssessment.list();
+        setAssessments(data);
+        
+        // Calculate performance data from fetched assessments
+        const completed = data.filter(a => a.status === 'completed' && a.result);
+        if (completed.length > 0) {
+          const totalAssessments = completed.length;
+          const averageScore = completed.reduce((acc, a) => acc + a.result.score.percentage, 0) / totalAssessments;
+          
+          const skillScores = {};
+          completed.forEach(a => {
+            Object.entries(a.result.topicScores).forEach(([topic, topicResult]) => {
+              const topicKey = mapTopicToCategory(topic);
+              if (!skillScores[topicKey]) {
+                skillScores[topicKey] = { total: 0, correct: 0, attempts: 0 };
+              }
+              skillScores[topicKey].total += topicResult.total;
+              skillScores[topicKey].correct += topicResult.correct;
+              skillScores[topicKey].attempts += 1;
+            });
+          });
 
-    if (savedAssessments) {
-      setAssessments(JSON.parse(savedAssessments));
-    }
-    if (savedPerformance) {
-      setPerformanceData(JSON.parse(savedPerformance));
-    }
+          const recentAssessments = completed.slice(0, 10).map(a => ({
+            id: a.id,
+            jobRole: a.jobRole,
+            topic: a.topic,
+            score: a.result.score.percentage,
+            submittedAt: a.result.submittedAt
+          }));
+
+          setPerformanceData({
+            totalAssessments,
+            averageScore,
+            skillScores,
+            recentAssessments
+          });
+        }
+      } catch (err) {
+        console.error('Error loading assessments:', err);
+      }
+    };
+    loadData();
   }, []);
-
-  // Save assessments to localStorage
-  useEffect(() => {
-    if (assessments.length > 0) {
-      localStorage.setItem('mockAssessments', JSON.stringify(assessments));
-    }
-  }, [assessments]);
-
-  // Save performance data to localStorage
-  useEffect(() => {
-    if (performanceData.totalAssessments > 0) {
-      localStorage.setItem('mockAssessmentPerformance', JSON.stringify(performanceData));
-    }
-  }, [performanceData]);
 
   const createAssessment = async (jobRole, topic, difficulty = 'medium') => {
     let questions = [];
@@ -62,25 +84,29 @@ export const MockAssessmentProvider = ({ children }) => {
       console.warn('Using fallback questions. Count:', questions.length);
     }
 
-    const newAssessment = {
-      id: Date.now().toString(),
-      jobRole,
-      topic,
-      difficulty,
-      questions,
-      createdAt: new Date().toISOString(),
-      duration: calculateDuration(questions.length, difficulty),
-      status: 'pending'
-    };
+    const duration = calculateDuration(questions.length, difficulty);
+    
+    try {
+      const newAssessment = await mockAssessment.create({
+        jobRole,
+        topic,
+        difficulty,
+        questions,
+        duration
+      });
 
-    setAssessments(prev => [newAssessment, ...prev]);
-    setCurrentAssessment(newAssessment);
-    setUserAnswers({});
-    setTimeRemaining(newAssessment.duration * 60); // Convert to seconds
-    return newAssessment;
+      setAssessments(prev => [newAssessment, ...prev]);
+      setCurrentAssessment(newAssessment);
+      setUserAnswers({});
+      setTimeRemaining(newAssessment.duration * 60); // Convert to seconds
+      return newAssessment;
+    } catch (err) {
+      console.error('Error creating assessment in DB:', err);
+      throw err;
+    }
   };
 
-  const submitAssessment = (answers = null) => {
+  const submitAssessment = async (answers = null) => {
     if (!currentAssessment) return;
 
     const finalAnswers = answers || userAnswers;
@@ -90,33 +116,36 @@ export const MockAssessmentProvider = ({ children }) => {
     const weaknesses = identifyWeaknesses(topicScores);
     const feedback = generateFeedback(score, strengths, weaknesses);
 
-    const result = {
-      assessmentId: currentAssessment.id,
+    const resultData = {
       score,
       topicScores,
       strengths,
       weaknesses,
       feedback,
-      submittedAt: new Date().toISOString(),
-      totalQuestions: currentAssessment.questions.length,
-      correctAnswers: score.correct,
       userAnswers: { ...finalAnswers }
     };
 
-    // Update assessment status
-    setAssessments(prev => prev.map(a =>
-      a.id === currentAssessment.id ? { ...a, status: 'completed', result } : a
-    ));
+    try {
+      const result = await mockAssessment.submit(currentAssessment.id, resultData);
 
-    // Update performance data
-    updatePerformanceData(result, currentAssessment);
+      // Update assessment status locally
+      setAssessments(prev => prev.map(a =>
+        a.id === currentAssessment.id ? { ...a, status: 'completed', result } : a
+      ));
 
-    setResults(result);
-    setCurrentAssessment(null);
-    setUserAnswers({});
-    setTimeRemaining(null);
+      // Update performance data
+      updatePerformanceData(result, currentAssessment);
 
-    return result;
+      setResults(result);
+      setCurrentAssessment(null);
+      setUserAnswers({});
+      setTimeRemaining(null);
+
+      return result;
+    } catch (err) {
+      console.error('Error submitting assessment result to DB:', err);
+      throw err;
+    }
   };
 
   const updatePerformanceData = (result, assessment) => {

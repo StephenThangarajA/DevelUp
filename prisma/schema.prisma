@@ -21,6 +21,7 @@ model User {
   resumes                  Resume[]
   startupSolutions         StartupSolution[]
   studentSolutions         StudentSolution[]
+  mockAssessments          MockAssessment[]
 
   @@map("users")
 }
@@ -313,10 +314,43 @@ model aptitude_mentor_progress {
   completedSubtopics Json     @default("{}")
   learnedSubtopics   Json     @default("{}")
   createdAt          DateTime @default(now())
-  updatedAt          DateTime
+  updatedAt          DateTime @updatedAt
   users              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model MockAssessment {
+  id         String                @id @default(uuid())
+  userId     Int
+  jobRole    String
+  topic      String?
+  difficulty String
+  questions  Json
+  duration   Int
+  status     String                @default("pending")
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+  user       User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  result     MockAssessmentResult?
+
+  @@index([userId])
+  @@map("mock_assessments")
+}
+
+model MockAssessmentResult {
+  id           String         @id @default(uuid())
+  assessmentId String         @unique
+  score        Json
+  topicScores  Json
+  strengths    Json
+  weaknesses   Json
+  feedback     Json
+  userAnswers  Json
+  submittedAt  DateTime       @default(now())
+  assessment   MockAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@map("mock_assessment_results")
 }
 
 enum Role {

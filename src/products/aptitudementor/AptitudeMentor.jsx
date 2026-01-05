@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -6,14 +6,33 @@ import PracticeSection from './PracticeSection';
 import LearnSection from './LearnSection';
 import QuestionPage from './QuestionPage';
 import LearnPage from './LearnPage';
+import { aptitudeMentor } from '../../lib/api';
 
 export default function AptitudeMentor() {
   const location = useLocation();
-  const [activeTab, setActiveTab] = React.useState(() => localStorage.getItem('aptitudeActiveTab') || 'practice');
+  const [activeTab, setActiveTab] = React.useState('practice');
 
-  const handleTabChange = (tab) => {
+  useEffect(() => {
+    const loadProgress = async () => {
+      try {
+        const progress = await aptitudeMentor.progress.get();
+        if (progress && progress.activeTab) {
+          setActiveTab(progress.activeTab);
+        }
+      } catch (err) {
+        console.error('Error loading aptitude progress:', err);
+      }
+    };
+    loadProgress();
+  }, []);
+
+  const handleTabChange = async (tab) => {
     setActiveTab(tab);
-    localStorage.setItem('aptitudeActiveTab', tab);
+    try {
+      await aptitudeMentor.progress.save({ activeTab: tab });
+    } catch (err) {
+      console.error('Error saving active tab:', err);
+    }
   };
 
   const showNavbar = !location.pathname.includes('/practice/') && !location.pathname.includes('/learn/');

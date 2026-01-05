@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { Dialog } from '../../components/ui/dialog';
 import { CircularProgressBar } from '@/components/ui/circular-progressbar';
+import { aptitudeMentor } from '../../lib/api';
 
 const QuestionPage = () => {
   const { mainTopic, subTopic } = useParams();
@@ -64,19 +65,23 @@ const QuestionPage = () => {
     setShowFeedback(true);
   };
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = async () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setShowFeedback(false);
     } else {
-      // Optionally navigate back to practice section or show completion message
-      // Mark subtopic as completed in localStorage
-      const savedCompleted = JSON.parse(localStorage.getItem('completedSubtopics')) || {};
-      if (!savedCompleted[mainTopic]) savedCompleted[mainTopic] = [];
-      if (!savedCompleted[mainTopic].includes(subTopic)) {
-        savedCompleted[mainTopic].push(subTopic);
-        localStorage.setItem('completedSubtopics', JSON.stringify(savedCompleted));
+      // Save progress to DB
+      try {
+        const progress = await aptitudeMentor.progress.get();
+        const savedCompleted = progress.completedSubtopics || {};
+        if (!savedCompleted[mainTopic]) savedCompleted[mainTopic] = [];
+        if (!savedCompleted[mainTopic].includes(subTopic)) {
+          savedCompleted[mainTopic].push(subTopic);
+          await aptitudeMentor.progress.save({ completedSubtopics: savedCompleted });
+        }
+      } catch (err) {
+        console.error('Error saving progress to DB:', err);
       }
       setShowCompletionDialog(true);
     }

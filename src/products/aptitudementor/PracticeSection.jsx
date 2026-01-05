@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../../components/ui/accordion';
 import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import { CircularProgressBar } from '@/components/ui/circular-progressbar';
+import { aptitudeMentor } from '../../lib/api';
 
 const TOPICS_STRUCTURE = {
   'logicalreasoning': [
@@ -50,11 +51,21 @@ const TOPICS_STRUCTURE = {
 
 export default function PracticeSection() {
   const navigate = useNavigate();
+  const [completedSubtopics, setCompletedSubtopics] = useState({});
 
-  const [completedSubtopics] = useState(() => {
-    const saved = localStorage.getItem('completedSubtopics');
-    return saved ? JSON.parse(saved) : {};
-  });
+  useEffect(() => {
+    const loadProgress = async () => {
+      try {
+        const progress = await aptitudeMentor.progress.get();
+        if (progress && progress.completedSubtopics) {
+          setCompletedSubtopics(progress.completedSubtopics);
+        }
+      } catch (err) {
+        console.error('Error loading completed subtopics:', err);
+      }
+    };
+    loadProgress();
+  }, []);
 
   const calculateProgress = (mainTopic) => {
     const totalSubtopics = TOPICS_STRUCTURE[mainTopic].length;

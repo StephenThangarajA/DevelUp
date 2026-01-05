@@ -4,6 +4,7 @@ import { Button } from '../../components/ui/button';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../../components/ui/accordion';
 import { ChevronLeft, ChevronRight, CheckCircle, Download, BookOpen } from 'lucide-react';
 import { CircularProgressBar } from '@/components/ui/circular-progressbar';
+import { aptitudeMentor } from '../../lib/api';
 import aptitudeBook from './book/Quantitative Aptitude for Competitive Examinations by R.S. Aggarwal.pdf';
 
 const TOPICS_STRUCTURE = {
@@ -50,11 +51,21 @@ const TOPICS_STRUCTURE = {
 
 export default function LearnSection() {
   const navigate = useNavigate();
+  const [learnedSubtopics, setLearnedSubtopics] = useState({});
 
-  const [learnedSubtopics] = useState(() => {
-    const saved = localStorage.getItem('learnedSubtopics');
-    return saved ? JSON.parse(saved) : {};
-  });
+  useEffect(() => {
+    const loadProgress = async () => {
+      try {
+        const progress = await aptitudeMentor.progress.get();
+        if (progress && progress.learnedSubtopics) {
+          setLearnedSubtopics(progress.learnedSubtopics);
+        }
+      } catch (err) {
+        console.error('Error loading learned subtopics:', err);
+      }
+    };
+    loadProgress();
+  }, []);
 
   const calculateProgress = (mainTopic) => {
     const totalSubtopics = TOPICS_STRUCTURE[mainTopic].length;
