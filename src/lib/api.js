@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
-export const setToken = () => {};
+export const setToken = () => { };
 
 const headers = () => ({ "Content-Type": "application/json" });
 
@@ -101,4 +101,15 @@ export const mockAssessment = {
   list: () => apiGet("/mock-assessment"),
   create: (data) => apiPost("/mock-assessment", data),
   submit: (id, data) => apiPost(`/mock-assessment/${id}/submit`, data)
+};
+
+export const marketing = {
+  get: () => apiGet("/marketing"),
+  update: (data) => apiPatch("/marketing", data),
+  customers: {
+    list: () => apiGet("/marketing/customers"),
+    create: (data) => apiPost("/marketing/customers", data),
+    update: (id, data) => apiPatch(`/marketing/customers/${id}`, data),
+    remove: (id) => fetch(`${API_URL}/marketing/customers/${id}`, { method: "DELETE", headers: headers(), credentials: 'include' })
+  }
 };

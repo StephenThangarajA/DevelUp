@@ -1,0 +1,78 @@
+.ms-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.ms-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ms-logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.ms-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.ms-nav-menu a {
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.ms-nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #dc2626;
+  transition: width 0.3s ease;
+}
+
+.ms-nav-menu a:hover {
+  color: #dc2626;
+}
+
+.ms-nav-menu a:hover::after {
+  width: 100%;
+}
+
+.ms-nav-menu a.ms-active {
+  color: #dc2626;
+}
+
+.ms-nav-menu a.ms-active::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .ms-nav-menu {
+    gap: 16px;
+  }
+}

@@ -94,6 +94,7 @@ export default function Home() {
   const goAuditSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('audit'); navigate('/auditsystem'); });
   const goAptitudeMentor = () => requireAuth('STUDENT', async () => { await startTrial('aptitudementor'); navigate('/aptitudementor'); });
   const goMockAssesment = () => requireAuth('STUDENT', async () => { await startTrial('mockassesment'); navigate('/mockassesment'); });
+  const goMarketingSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('marketing'); navigate('/marketing'); });
 
   const handleStartJourneyClick = () => {
     navigate('/login');
@@ -192,6 +193,12 @@ export default function Home() {
                   <h4>Audit System</h4>
                   <p className="solution-description">Audit your business operations with ease using our Audit System.</p>
                   <button className="cta-button" id="navButton" onClick={goAuditSystem}>Try Now</button>
+                </div>
+                <div className="solution-item">
+                  <div className="solution-icon"><img src="/src/assets/audit.png" alt="Marketing" /></div>
+                  <h4>Marketing System</h4>
+                  <p className="solution-description">Manage your marketing campaigns with ease using our Marketing System.</p>
+                  <button className="cta-button" id="navButton" onClick={goMarketingSystem}>Try Now</button>
                 </div>
               </div>
             </div>

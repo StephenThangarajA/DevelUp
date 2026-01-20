@@ -36,6 +36,7 @@ model StartupSolution {
   audit       AuditWorkspace?
   helpdesk    HelpdeskWorkspace?
   payroll     PayrollWorkspace?
+  marketing   MarketingWorkspace?
   owner       User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@index([ownerId])
@@ -356,4 +357,29 @@ model MockAssessmentResult {
 enum Role {
   STARTUP_ADMIN
   STUDENT
+}
+
+model MarketingWorkspace {
+  id               Int                @id @default(autoincrement())
+  solutionId       Int                @unique
+  brandFoundation  Json?
+  contentPlans     Json               @default("[]")
+  socialMedia      Json               @default("{\"scheduledPosts\": [], \"emailOutreach\": [], \"posters\": []}")
+  businessAnalyses Json               @default("[]")
+  customers        MarketingCustomer[]
+  solution         StartupSolution    @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+
+  @@map("marketing_workspaces")
+}
+
+model MarketingCustomer {
+  id          Int                @id @default(autoincrement())
+  workspaceId Int
+  name        String
+  email       String
+  interests   Json               @default("[]")
+  signupDate  DateTime           @default(now())
+  workspace   MarketingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("marketing_customers")
 }

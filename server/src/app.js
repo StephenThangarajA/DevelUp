@@ -9,6 +9,7 @@ import payrollRoutes from "./routes/payroll.js";
 import studentRoutes from "./routes/students.js";
 import aptitudeMentorRoutes from "./routes/aptitudeMentor.js";
 import mockAssessmentRoutes from "./routes/mockAssessment.js";
+import marketingRoutes from "./routes/marketing.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use("/payroll", payrollRoutes);
 app.use("/students", studentRoutes);
 app.use("/aptitude-mentor", aptitudeMentorRoutes);
 app.use("/mock-assessment", mockAssessmentRoutes);
+app.use("/marketing", marketingRoutes);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
