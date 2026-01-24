@@ -184,7 +184,9 @@ const ReportPDFDocument = ({
 )
 
 const Reports = () => {
-  const { employees, payslips, formatCurrency } = usePayroll()
+  const { employees, payslips, settings, formatCurrency, getCurrencySymbol } = usePayroll()
+
+  const symbol = getCurrencySymbol()
 
   // Calculate statistics
   const totalEmployees = employees.length
@@ -204,18 +206,18 @@ const Reports = () => {
 
   // Salary ranges
   const salaryRanges = {
-    'Under $50k': 0,
-    '$50k - $75k': 0,
-    '$75k - $100k': 0,
-    'Over $100k': 0
+    [`Under ${symbol}50k`]: 0,
+    [`${symbol}50k - ${symbol}75k`]: 0,
+    [`${symbol}75k - ${symbol}100k`]: 0,
+    [`Over ${symbol}100k`]: 0
   }
 
   employees.forEach(emp => {
     const netSalary = emp.baseSalary + emp.allowances - emp.deductions
-    if (netSalary < 50000) salaryRanges['Under $50k']++
-    else if (netSalary < 75000) salaryRanges['$50k - $75k']++
-    else if (netSalary < 100000) salaryRanges['$75k - $100k']++
-    else salaryRanges['Over $100k']++
+    if (netSalary < 50000) salaryRanges[`Under ${symbol}50k`]++
+    else if (netSalary < 75000) salaryRanges[`${symbol}50k - ${symbol}75k`]++
+    else if (netSalary < 100000) salaryRanges[`${symbol}75k - ${symbol}100k`]++
+    else salaryRanges[`Over ${symbol}100k`]++
   })
 
   // Monthly payroll trend from payslips

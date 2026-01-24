@@ -13,6 +13,8 @@ app.listen(port, () => {
       await ensureProductExists("helpdesk", "HelpDesk System", "startup", 7, 20);
       await ensureProductExists("audit", "Audit System", "startup", 7, 20);
       await ensureProductExists("payroll", "Payroll System", "startup", 7, 20);
+      await ensureProductExists("marketing", "Marketing System", "startup", 7, 20);
+      await ensureProductExists("vendor", "Vendor & Tool Management", "startup", 7, 20);
       await ensureProductExists("resume", "Resume Builder", "student", 7, 10);
       await ensureProductExists("ats", "ATS Resume Checker", "student", 7, 10);
       await ensureProductExists("coverletter", "Cover Letter Generator", "student", 7, 10);

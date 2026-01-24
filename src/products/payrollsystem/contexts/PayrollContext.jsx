@@ -96,20 +96,33 @@ export const PayrollProvider = ({ children }) => {
   }
 
   // Currency formatting utility
+  const getCurrencySymbol = (currencyCode) => {
+    const currency = currencyCode || settings.currency || 'USD'
+    switch (currency) {
+      case 'INR': return '₹'
+      case 'EUR': return '€'
+      case 'GBP': return '£'
+      case 'USD':
+      default: return '$'
+    }
+  }
+
   const formatCurrency = (amount) => {
     if (typeof amount !== 'number') return amount
 
     const currency = settings.currency || 'USD'
+    const symbol = getCurrencySymbol(currency)
+    
     switch (currency) {
       case 'INR':
-        return `₹${amount.toLocaleString('en-IN')}`
+        return `${symbol}${amount.toLocaleString('en-IN')}`
       case 'EUR':
-        return `€${amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        return `${symbol}${amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
       case 'GBP':
-        return `£${amount.toLocaleString('en-GB')}`
+        return `${symbol}${amount.toLocaleString('en-GB')}`
       case 'USD':
       default:
-        return `$${amount.toLocaleString('en-US')}`
+        return `${symbol}${amount.toLocaleString('en-US')}`
     }
   }
 
@@ -125,7 +138,8 @@ export const PayrollProvider = ({ children }) => {
     generatePayslip,
     setSettings,
     saveSettings,
-    formatCurrency
+    formatCurrency,
+    getCurrencySymbol
   }
 
   return (

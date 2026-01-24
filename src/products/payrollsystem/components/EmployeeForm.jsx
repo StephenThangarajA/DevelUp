@@ -4,18 +4,7 @@ import '../styles/EmployeeForm.css'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 const EmployeeForm = ({ employee, onClose }) => {
-  const { addEmployee, updateEmployee, settings } = usePayroll()
-  
-  // Get currency symbol
-  const getCurrencySymbol = () => {
-    switch(settings.currency) {
-      case 'INR': return '₹'
-      case 'EUR': return '€'
-      case 'GBP': return '£'
-      case 'USD':
-      default: return '$'
-    }
-  }
+  const { addEmployee, updateEmployee, settings, getCurrencySymbol } = usePayroll()
   
   const currencySymbol = getCurrencySymbol()
   const isEditing = Boolean(employee)

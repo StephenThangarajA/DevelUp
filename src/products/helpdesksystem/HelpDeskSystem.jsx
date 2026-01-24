@@ -119,7 +119,7 @@ function HelpDeskSystem() {
                     <Route path="customers" element={<Customers customers={customers} />} />
                     <Route path="customers/new" element={<CreateCustomer onCreateCustomer={addCustomer} />} />
                     <Route path="customers/:id" element={<CustomerDetail customers={customers} tickets={tickets} />} />
-                    <Route path="agents" element={<Agents agents={agents} />} />
+                    <Route path="agents" element={<Agents agents={agents} tickets={tickets} />} />
                     <Route path="agents/new" element={<CreateAgent onCreateAgent={addAgent} />} />
                     <Route path="agents/:id" element={<AgentDetail agents={agents} tickets={tickets} />} />
                     <Route path="messages/new/:agentId" element={<SendMessage />} />

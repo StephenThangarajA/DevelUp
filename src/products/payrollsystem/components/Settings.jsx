@@ -11,7 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 const Settings = () => {
-  const { settings, setSettings, saveSettings, formatCurrency } = usePayroll()
+  const { settings, setSettings, saveSettings, formatCurrency, getCurrencySymbol } = usePayroll()
   const [activeTab, setActiveTab] = useState('company')
   const [formData, setFormData] = useState(settings)
   const [saved, setSaved] = useState(false)
@@ -287,7 +287,7 @@ const Settings = () => {
 
               <div className="settings-form-field">
                 <label>
-                  Health Insurance ({formData.currency === 'INR' ? '₹' : formData.currency === 'EUR' ? '€' : formData.currency === 'GBP' ? '£' : '$'})
+                  Health Insurance ({getCurrencySymbol(formData.currency)})
                 </label>
                 <input
                   type="number"

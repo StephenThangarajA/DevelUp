@@ -17,6 +17,7 @@ import AuditSystem from './products/auditsystem/AuditSystem.jsx';
 import AptitudeMentor from './products/aptitudementor/AptitudeMentor.jsx';
 import MockAssesment from './products/mockassesment/MockAssesment.jsx';
 import MarketingSystem from './products/marketingsystem/MarketingSystem.jsx';
+import VendorSystem from './products/vendorsystem/VendorSystem.jsx';
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
       <Route path="/aptitudementor/*" element={<AptitudeMentor />} />
       <Route path="/mockassesment/*" element={<MockAssesment />} />
       <Route path="/marketing/*" element={<MarketingSystem />} />
+      <Route path="/vendorsystem/*" element={<VendorSystem />} />
     </Routes>
   );
 }

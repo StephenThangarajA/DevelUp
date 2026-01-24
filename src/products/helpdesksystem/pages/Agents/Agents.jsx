@@ -3,15 +3,39 @@ import { Link } from 'react-router-dom';
 import { FaPlus, FaEnvelope } from 'react-icons/fa';
 import './Agents.css';
 
-const Agents = ({ agents }) => {
+const Agents = ({ agents, tickets = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterDepartment, setFilterDepartment] = useState('all');
-  // Removed modal-related state to use route-based pages like Customers
 
   const departments = [...new Set(agents.map(agent => agent.department))];
 
-  const filteredAgents = agents.filter(agent => {
+  const getAgentStats = (agentId, agentName) => {
+    const agentTickets = tickets.filter(ticket => {
+      const assigneeId = ticket.assigneeId;
+      const assigneeName = typeof ticket.assignee === 'string' ? ticket.assignee : ticket.assignee?.name;
+
+      return (
+        (assigneeId !== undefined && assigneeId !== null && Number(assigneeId) === agentId) ||
+        (assigneeName && assigneeName === agentName) ||
+        (typeof ticket.assignee === 'string' && Number(ticket.assignee) === agentId)
+      );
+    });
+
+    const active = agentTickets.filter(t => t.status !== 'resolved' && t.status !== 'closed').length;
+    const resolved = agentTickets.filter(t => t.status === 'resolved' || t.status === 'closed').length;
+
+    return { active, resolved };
+  };
+
+  const filteredAgents = agents.map(agent => {
+    const stats = getAgentStats(agent.id, agent.name);
+    return {
+      ...agent,
+      activeTickets: stats.active,
+      resolvedTickets: stats.resolved
+    };
+  }).filter(agent => {
     const matchesSearch = agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       agent.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       agent.role.toLowerCase().includes(searchTerm.toLowerCase());
@@ -64,11 +88,11 @@ const Agents = ({ agents }) => {
               <div className="stat-label">Online Now</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">{agents.reduce((sum, a) => sum + a.activeTickets, 0)}</div>
+              <div className="stat-value">{filteredAgents.reduce((sum, a) => sum + a.activeTickets, 0)}</div>
               <div className="stat-label">Active Tickets</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">{agents.reduce((sum, a) => sum + a.resolvedTickets, 0)}</div>
+              <div className="stat-value">{filteredAgents.reduce((sum, a) => sum + a.resolvedTickets, 0)}</div>
               <div className="stat-label">Resolved Tickets</div>
             </div>
           </div>

@@ -113,3 +113,20 @@ export const marketing = {
     remove: (id) => fetch(`${API_URL}/marketing/customers/${id}`, { method: "DELETE", headers: headers(), credentials: 'include' })
   }
 };
+
+export const vendor = {
+  get: () => apiGet("/vendor"),
+  update: (data) => apiPatch("/vendor", data),
+  vendors: {
+    list: () => apiGet("/vendor/vendors"),
+    create: (data) => apiPost("/vendor/vendors", data),
+    update: (id, data) => apiPatch(`/vendor/vendors/${id}`, data),
+    remove: (id) => fetch(`${API_URL}/vendor/vendors/${id}`, { method: "DELETE", headers: headers(), credentials: 'include' })
+  },
+  tools: {
+    list: () => apiGet("/vendor/tools"),
+    create: (data) => apiPost("/vendor/tools", data),
+    update: (id, data) => apiPatch(`/vendor/tools/${id}`, data),
+    remove: (id) => fetch(`${API_URL}/vendor/tools/${id}`, { method: "DELETE", headers: headers(), credentials: 'include' })
+  }
+};

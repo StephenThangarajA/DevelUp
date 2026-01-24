@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BriefcaseBusiness, BookText, BarChart2, Lightbulb, Mail, MapPin, Phone } from 'lucide-react';
+import { BriefcaseBusiness, BookText, BarChart2, Lightbulb, Mail, MapPin, Phone, AlertCircle, X } from 'lucide-react';
 import '../styles/pages/Home.css';
 import { startTrial, authMe } from '../lib/api.js';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("business");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dialog, setDialog] = useState({ isOpen: false, message: '', title: '' });
   const navigate = useNavigate();
+
+  const showDialog = (message, title = 'Access Denied') => {
+    setDialog({ isOpen: true, message, title });
+  };
+
+  const closeDialog = () => {
+    setDialog({ ...dialog, isOpen: false });
+  };
 
   useEffect(() => {
     (async () => {
@@ -76,13 +85,29 @@ export default function Home() {
   }, []);
 
   const requireAuth = async (role, action) => {
+    let me;
     try {
-      const me = await authMe();
-      if (!me) { navigate('/login'); return; }
-      if (role && me.role !== role) { alert('Access denied'); return; }
-      await action();
+      me = await authMe();
     } catch {
       navigate('/login');
+      return;
+    }
+
+    if (!me) {
+      navigate('/login');
+      return;
+    }
+
+    if (role && me.role !== role) {
+      showDialog(`Access denied. This feature requires ${role} role.`);
+      return;
+    }
+
+    try {
+      await action();
+    } catch (err) {
+      console.error('Action failed:', err);
+      showDialog('Something went wrong. Please try again.', 'Error');
     }
   };
 
@@ -95,6 +120,7 @@ export default function Home() {
   const goAptitudeMentor = () => requireAuth('STUDENT', async () => { await startTrial('aptitudementor'); navigate('/aptitudementor'); });
   const goMockAssesment = () => requireAuth('STUDENT', async () => { await startTrial('mockassesment'); navigate('/mockassesment'); });
   const goMarketingSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('marketing'); navigate('/marketing'); });
+  const goVendorSystem = () => requireAuth('STARTUP_ADMIN', async () => { await startTrial('vendor'); navigate('/vendorsystem'); });
 
   const handleStartJourneyClick = () => {
     navigate('/login');
@@ -199,6 +225,12 @@ export default function Home() {
                   <h4>Marketing System</h4>
                   <p className="solution-description">Manage your marketing campaigns with ease using our Marketing System.</p>
                   <button className="cta-button" id="navButton" onClick={goMarketingSystem}>Try Now</button>
+                </div>
+                <div className="solution-item">
+                  <div className="solution-icon"><img src="/src/assets/payroll.png" alt="Vendor" /></div>
+                  <h4>Vendor & Tool Management</h4>
+                  <p className="solution-description">Manage your vendors and software tools with ease using our Vendor System.</p>
+                  <button className="cta-button" id="navButton" onClick={goVendorSystem}>Try Now</button>
                 </div>
               </div>
             </div>
@@ -367,6 +399,29 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Custom Dialog Box */}
+      {dialog.isOpen && (
+        <div className="custom-dialog-overlay">
+          <div className="custom-dialog">
+            <div className="custom-dialog-header">
+              <div className="custom-dialog-title">
+                <AlertCircle className="custom-dialog-icon" size={24} />
+                <h3>{dialog.title}</h3>
+              </div>
+              <button className="custom-dialog-close" onClick={closeDialog}>
+                <X size={20} />
+              </button>
+            </div>
+            <div className="custom-dialog-body">
+              <p>{dialog.message}</p>
+            </div>
+            <div className="custom-dialog-footer">
+              <button className="custom-dialog-button" onClick={closeDialog}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

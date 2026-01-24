@@ -37,6 +37,7 @@ model StartupSolution {
   helpdesk    HelpdeskWorkspace?
   payroll     PayrollWorkspace?
   marketing   MarketingWorkspace?
+  vendor      VendorWorkspace?
   owner       User               @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   @@index([ownerId])
@@ -382,4 +383,54 @@ model MarketingCustomer {
   workspace   MarketingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@map("marketing_customers")
+}
+
+model VendorWorkspace {
+  id         Int             @id @default(autoincrement())
+  solutionId Int             @unique
+  budgets    Json            @default("{\"totalMonthlyLimit\": 5000, \"categories\": {\"Infrastructure\": 2000, \"Communication\": 1000, \"Development\": 1000, \"Marketing\": 1000}}")
+  vendors    Vendor[]
+  tools      Tool[]
+  solution   StartupSolution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+
+  @@map("vendor_workspaces")
+}
+
+model Vendor {
+  id           Int             @id @default(autoincrement())
+  workspaceId  Int
+  name         String
+  category     String
+  status       String
+  monthlySpend Float           @default(0)
+  renewalDate  DateTime?
+  contactEmail String?
+  owner        String?
+  billingCycle String?
+  supportLevel String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  workspace    VendorWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  tools        Tool[]
+
+  @@map("vendors")
+}
+
+model Tool {
+  id            Int             @id @default(autoincrement())
+  workspaceId   Int
+  vendorId      Int?
+  name          String
+  users         Int             @default(0)
+  inactiveUsers Json            @default("[]")
+  costPerUser   Float           @default(0)
+  status        String
+  purpose       String?
+  lastAudit     DateTime?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  vendor        Vendor?         @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  workspace     VendorWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("tools")
 }
