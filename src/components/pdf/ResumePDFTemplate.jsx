@@ -5,136 +5,111 @@ import linkedinIcon from '../../assets/icons/linkedin.png';
 import githubIcon from '../../assets/icons/github.png';
 import globeIcon from '../../assets/icons/globe.png';
 
-// Register fonts for better typography
-Font.register({
-  family: 'Helvetica',
-  fonts: [
-    { src: 'https://fonts.gstatic.com/s/helvetica/v1/Helvetica.ttf' },
-    { src: 'https://fonts.gstatic.com/s/helvetica/v1/Helvetica-Bold.ttf', fontWeight: 'bold' }
-  ]
-});
+// No custom font registration needed for Times-Roman as it's a core PDF font
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
-    fontFamily: 'Helvetica',
-    fontSize: 11,
-    lineHeight: 1.4,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 40,
+    paddingRight: 40,
+    fontFamily: 'Times-Roman',
+    fontSize: 10,
+    lineHeight: 1.2,
     color: '#000000',
   },
   header: {
-    textAlign: 'center',
-    marginBottom: 20,
+    alignItems: 'center',
+    marginBottom: 12,
   },
   name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontSize: 22,
+    fontFamily: 'Times-Bold',
     marginBottom: 4,
-  },
-  title: {
-    fontSize: 12,
-    textTransform: 'uppercase',
-    marginBottom: 8,
   },
   contactInfo: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 8,
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    columnGap: 10,
+    rowGap: 4,
     fontSize: 9,
+    marginBottom: 4,
   },
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 5,
   },
   icon: {
-    width: 10,
-    height: 10,
+    width: 9,
+    height: 9,
     marginRight: 3,
   },
   section: {
-    marginBottom: 16,
+    marginTop: 8,
+    marginBottom: 4,
   },
   sectionTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontFamily: 'Times-Bold',
     borderBottomWidth: 1,
     borderBottomColor: '#000000',
-    borderBottomStyle: 'solid',
-    paddingBottom: 4,
-    marginBottom: 8,
+    paddingBottom: 1,
+    marginBottom: 5,
   },
-  educationItem: {
-    marginBottom: 8,
-  },
-  educationHeader: {
+  itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 1,
+  },
+  itemTitle: {
+    fontSize: 10.5,
+    fontFamily: 'Times-Bold',
+  },
+  itemDate: {
+    fontSize: 9.5,
+    fontFamily: 'Times-Bold',
+  },
+  itemSubTitle: {
+    fontSize: 9.5,
     marginBottom: 2,
   },
-  educationTitle: {
-    fontWeight: 'bold',
-  },
-  educationDetails: {
+  bulletPoint: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginBottom: 1,
+    paddingLeft: 5,
+  },
+  bullet: {
+    width: 12,
     fontSize: 10,
   },
-  experienceItem: {
-    marginBottom: 12,
+  bulletContent: {
+    flex: 1,
+    fontSize: 9.5,
+    textAlign: 'justify',
+    lineHeight: 1.3,
   },
-  experienceHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 2,
-  },
-  experienceTitle: {
-    fontWeight: 'bold',
-  },
-  experienceCompany: {
-    fontStyle: 'italic',
-  },
-  experienceLocation: {
-    fontSize: 10,
-  },
-  projectItem: {
-    marginBottom: 8,
-  },
-  projectHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 2,
-  },
-  projectTitle: {
-    fontWeight: 'bold',
-  },
-  skillsContainer: {
+  skillsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginTop: 2,
+    rowGap: 2,
   },
-  skillCategory: {
-    marginBottom: 6,
-    width: '50%',
+  skillItem: {
+    width: '14.28%', // 7 columns
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  skillTitle: {
-    fontWeight: 'bold',
-    fontSize: 10,
-    marginBottom: 2,
+  skillBullet: {
+    width: 10,
+    fontSize: 8,
+    textAlign: 'center',
   },
   skillText: {
     fontSize: 9,
   },
-  extraText: {
-    fontSize: 10,
-    lineHeight: 1.5,
-  },
-  link: {
-    color: '#0000EE',
-    textDecoration: 'underline',
-  }
 });
 
 const ResumePDFTemplate = ({ resumeData }) => {
@@ -148,9 +123,47 @@ const ResumePDFTemplate = ({ resumeData }) => {
     toggle
   } = resumeData;
 
-  const formatSkills = (skillsString) => {
-    return skillsString.split(',').map(skill => skill.trim()).filter(skill => skill);
+  const stripHtml = (html) => {
+    if (!html) return [];
+
+    // Clean up basic entities first
+    let cleanHtml = html.replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+
+    // Check if it contains <li> tags
+    if (cleanHtml.includes('<li')) {
+      const liMatches = cleanHtml.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+      if (liMatches) {
+        return liMatches.map(li => li.replace(/<[^>]+>/g, '').trim()).filter(t => t);
+      }
+    }
+
+    // Otherwise split by common block delimiters
+    return cleanHtml
+      .split(/<\/p>|<p>|<br\s*\/?>|\n/gi)
+      .map(line => line.replace(/<[^>]+>/g, '').trim())
+      .filter(line => line.length > 0);
   };
+
+  const renderBullets = (html) => {
+    const lines = stripHtml(html);
+    return lines.map((line, i) => (
+      <View key={i} style={styles.bulletPoint}>
+        <Text style={styles.bullet}>•</Text>
+        <Text style={styles.bulletContent}>{line}</Text>
+      </View>
+    ));
+  };
+
+  const allSkills = [
+    ...(technicalSkills.languages ? technicalSkills.languages.split(',').map(s => s.trim()) : []),
+    ...(technicalSkills.technologies_framework ? technicalSkills.technologies_framework.split(',').map(s => s.trim()) : []),
+    ...(technicalSkills.devTools ? technicalSkills.devTools.split(',').map(s => s.trim()) : [])
+  ].filter(s => s);
 
   return (
     <Document>
@@ -158,7 +171,6 @@ const ResumePDFTemplate = ({ resumeData }) => {
         {/* Header Section */}
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name || 'Your Name'}</Text>
-          <Text style={styles.title}>{personalInfo.title || 'Professional Title'}</Text>
 
           <View style={styles.contactInfo}>
             {personalInfo.phone && (
@@ -173,22 +185,19 @@ const ResumePDFTemplate = ({ resumeData }) => {
                 <Text>{personalInfo.email}</Text>
               </View>
             )}
+          </View>
+
+          <View style={styles.contactInfo}>
             {personalInfo.linkedin && (
               <View style={styles.contactItem}>
                 <Image src={linkedinIcon} style={styles.icon} />
-                <Text>LinkedIn</Text>
+                <Text>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, '')}</Text>
               </View>
             )}
             {personalInfo.github && (
               <View style={styles.contactItem}>
                 <Image src={githubIcon} style={styles.icon} />
-                <Text>GitHub</Text>
-              </View>
-            )}
-            {personalInfo.portfolio && (
-              <View style={styles.contactItem}>
-                <Image src={globeIcon} style={styles.icon} />
-                <Text>Portfolio</Text>
+                <Text>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, '')}</Text>
               </View>
             )}
           </View>
@@ -199,17 +208,12 @@ const ResumePDFTemplate = ({ resumeData }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Education</Text>
             {education.map((edu, index) => (
-              <View key={index} style={styles.educationItem}>
-                <View style={styles.educationHeader}>
-                  <Text style={styles.educationTitle}>
-                    {edu.college || 'College Name'} - {edu.degree || 'Degree'}
-                  </Text>
-                  <Text>{edu.duration || 'Duration'}</Text>
+              <View key={index} style={{ marginBottom: 4 }}>
+                <View style={styles.itemHeader}>
+                  <Text style={styles.itemTitle}>{edu.degree || 'Degree'}</Text>
+                  {edu.grade && <Text style={styles.itemDate}>CGPA - {edu.grade}</Text>}
                 </View>
-                <View style={styles.educationDetails}>
-                  <Text>{edu.grade ? `Grade: ${edu.grade}` : ''}</Text>
-                  <Text>{edu.location || 'Location'}</Text>
-                </View>
+                <Text style={styles.itemSubTitle}>{edu.college || 'College Name'}</Text>
               </View>
             ))}
           </View>
@@ -218,24 +222,16 @@ const ResumePDFTemplate = ({ resumeData }) => {
         {/* Experience Section */}
         {toggle.experienceToggle && experience.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Experience</Text>
+            <Text style={styles.sectionTitle}>Work Experience</Text>
             {experience.map((exp, index) => (
-              <View key={index} style={styles.experienceItem}>
-                <View style={styles.experienceHeader}>
-                  <Text style={styles.experienceTitle}>
-                    {exp.role || 'Job Title'}
+              <View key={index} style={{ marginBottom: 6 }}>
+                <View style={styles.itemHeader}>
+                  <Text style={styles.itemTitle}>
+                    {exp.role} <Text style={{ fontFamily: 'Times-Roman', fontWeight: 'normal' }}>({exp.company})</Text>
                   </Text>
-                  <Text>{exp.duration || 'Duration'}</Text>
+                  <Text style={styles.itemDate}>({exp.duration})</Text>
                 </View>
-                <View style={styles.educationDetails}>
-                  <Text style={styles.experienceCompany}>
-                    {exp.company || 'Company Name'}
-                  </Text>
-                  <Text>{exp.location || 'Location'}</Text>
-                </View>
-                <Text style={{ marginTop: 4, fontSize: 10 }}>
-                  {exp.summary || 'Job description and responsibilities...'}
-                </Text>
+                {renderBullets(exp.summary)}
               </View>
             ))}
           </View>
@@ -246,56 +242,38 @@ const ResumePDFTemplate = ({ resumeData }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Projects</Text>
             {projects.map((project, index) => (
-              <View key={index} style={styles.projectItem}>
-                <View style={styles.projectHeader}>
-                  <Text style={styles.projectTitle}>
-                    {project.projectTitle || 'Project Name'}
+              <View key={index} style={{ marginBottom: 6 }}>
+                <View style={styles.itemHeader}>
+                  <Text style={styles.itemTitle}>
+                    {project.projectTitle} | <Text style={{ fontFamily: 'Times-Roman', fontWeight: 'normal', fontSize: 9 }}>{project.tech}</Text>
                   </Text>
-                  <Text>{project.duration || 'Duration'}</Text>
                 </View>
-                <Text style={{ fontSize: 10, marginBottom: 2 }}>
-                  {project.summary || 'Project description...'}
-                </Text>
-                <Text style={{ fontSize: 9 }}>
-                  Tech Stack: {project.tech || 'Technologies used'}
-                </Text>
+                {renderBullets(project.summary)}
               </View>
             ))}
           </View>
         )}
 
-        {/* Skills Section */}
-        {toggle.skillsToggle && (
+        {/* Extra/Achievements Section */}
+        {toggle.extraToggle && extra && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Technical Skills</Text>
-            <View style={styles.skillsContainer}>
-              {technicalSkills.languages && (
-                <View style={styles.skillCategory}>
-                  <Text style={styles.skillTitle}>Languages:</Text>
-                  <Text style={styles.skillText}>{technicalSkills.languages}</Text>
-                </View>
-              )}
-              {technicalSkills.technologies_framework && (
-                <View style={styles.skillCategory}>
-                  <Text style={styles.skillTitle}>Technologies:</Text>
-                  <Text style={styles.skillText}>{technicalSkills.technologies_framework}</Text>
-                </View>
-              )}
-              {technicalSkills.devTools && (
-                <View style={styles.skillCategory}>
-                  <Text style={styles.skillTitle}>Tools:</Text>
-                  <Text style={styles.skillText}>{technicalSkills.devTools}</Text>
-                </View>
-              )}
-            </View>
+            <Text style={styles.sectionTitle}>Achievements</Text>
+            {renderBullets(extra)}
           </View>
         )}
 
-        {/* Extra Section */}
-        {toggle.extraToggle && extra && (
+        {/* Skills Section */}
+        {toggle.skillsToggle && allSkills.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Additional Information</Text>
-            <Text style={styles.extraText}>{extra}</Text>
+            <Text style={styles.sectionTitle}>Skills</Text>
+            <View style={styles.skillsGrid}>
+              {allSkills.map((skill, index) => (
+                <View key={index} style={styles.skillItem}>
+                  <Text style={styles.skillBullet}>•</Text>
+                  <Text style={styles.skillText}>{skill}</Text>
+                </View>
+              ))}
+            </View>
           </View>
         )}
       </Page>

@@ -21,11 +21,16 @@ function MockAssessmentContent() {
     setView('taking');
   };
 
-  const handleAssessmentSubmit = (answers) => {
+  const handleAssessmentSubmit = async (answers) => {
     setSubmittedAnswers(answers);
-    const result = submitAssessment(answers);
-    setAssessmentResult(result);
-    setView('results');
+    try {
+      const result = await submitAssessment(answers);
+      setAssessmentResult(result);
+      setView('results');
+    } catch (error) {
+      console.error("Failed to submit assessment:", error);
+      // Optionally handle error view
+    }
   };
 
   const handleStartNew = () => {

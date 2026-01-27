@@ -25,7 +25,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
     <nav className="navbar">
       <div className="container">
         <div className="logo">
-          <span>PayrollPro</span>
+          <span>Payroll Hub</span>
         </div>
 
         <div className="nav-menu">

@@ -9,7 +9,7 @@ const Extra = () => {
 	const plain = extra.replace(/<[^>]+>/g, '')
 	return (
 		<div className='mt-3'>
-			<Title title='Extra' />
+			<Title title='Achievements' />
 			<p className='text-sm leading-6 whitespace-pre-line'>{plain}</p>
 		</div>
 	)

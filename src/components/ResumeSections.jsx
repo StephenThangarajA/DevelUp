@@ -11,7 +11,7 @@ const ResumeSections = ({ tab, setTab }) => {
     { id: 2, icon: <IoBag size={30} />, name: 'Experience' },
     { id: 4, icon: <GrPersonalComputer size={30} />, name: 'Projects' },
     { id: 6, icon: <FaReact size={30} />, name: 'Skills' },
-    { id: 5, icon: <PiCertificateBold size={30} />, name: 'Extra Activities' },
+    { id: 5, icon: <PiCertificateBold size={30} />, name: 'Achievements' },
   ];
 
   return (

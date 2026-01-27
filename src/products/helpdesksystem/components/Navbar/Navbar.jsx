@@ -13,11 +13,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="container">
-
         <Link to="/helpdesksystem/dashboard" className="logo">
-          <span>HelpDesk Pro</span>
+          <span>HelpDesk Hub</span>
         </Link>
-
         <div
           className="mobile-menu-toggle"
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}

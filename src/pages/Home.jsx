@@ -20,7 +20,19 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      try { setIsLoggedIn(!!await authMe()); } catch { setIsLoggedIn(false); }
+      try {
+        const user = await authMe();
+        if (user) {
+          setIsLoggedIn(true);
+          if (user.role === 'STUDENT') {
+            setActiveTab('students');
+          }
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch {
+        setIsLoggedIn(false);
+      }
     })();
     const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
     const observer = new IntersectionObserver((entries) => {
@@ -221,13 +233,13 @@ export default function Home() {
                   <button className="cta-button" id="navButton" onClick={goAuditSystem}>Try Now</button>
                 </div>
                 <div className="solution-item">
-                  <div className="solution-icon"><img src="/src/assets/audit.png" alt="Marketing" /></div>
+                  <div className="solution-icon"><img src="/src/assets/market.png" alt="Marketing" /></div>
                   <h4>Marketing System</h4>
                   <p className="solution-description">Manage your marketing campaigns with ease using our Marketing System.</p>
                   <button className="cta-button" id="navButton" onClick={goMarketingSystem}>Try Now</button>
                 </div>
                 <div className="solution-item">
-                  <div className="solution-icon"><img src="/src/assets/payroll.png" alt="Vendor" /></div>
+                  <div className="solution-icon"><img src="/src/assets/vendor.png" alt="Vendor" /></div>
                   <h4>Vendor & Tool Management</h4>
                   <p className="solution-description">Manage your vendors and software tools with ease using our Vendor System.</p>
                   <button className="cta-button" id="navButton" onClick={goVendorSystem}>Try Now</button>

@@ -19,7 +19,7 @@ const Forms = () => {
       {tab === 'Experience' && <ExperienceForm />}
       {tab === 'Projects' && <ProjectForm />}
       {tab === 'Skills' && <SkillForm />}
-      {tab === 'Extra Activities' && <ExtraForm />}
+      {tab === 'Achievements' && <ExtraForm />}
     </div>
   );
 };

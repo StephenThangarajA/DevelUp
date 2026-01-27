@@ -31,8 +31,8 @@ const Extra = () => {
   }
   return (
     <Section
-      title='Achievements and Certifications'
-      description='Add your Achievements and Certifications'
+      title='Achievements'
+      description='Add your achievements and certifications'
       sectionKey='extraToggle'
     >
       <div className='px-4 mb-4'>

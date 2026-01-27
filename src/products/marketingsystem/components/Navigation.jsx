@@ -16,7 +16,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
     <nav className="ms-navbar">
       <div className="ms-container">
         <div className="ms-logo">
-          <span>MarketGrow AI</span>
+          <span>Market Hub</span>
         </div>
 
         <div className="ms-nav-menu">

@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container">
         <NavLink to="" end className="logo">
-          AuditFlow
+          Audit Hub
         </NavLink>
 
         <nav className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>

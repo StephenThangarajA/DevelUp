@@ -4,6 +4,17 @@ import { Button } from '../../../components/ui/button';
 import { Award, TrendingUp, Target, AlertCircle, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 
 export default function ResultsView({ result, assessment, onStartNew, userAnswers: propUserAnswers }) {
+  if (!result || !result.score) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-lg border border-gray-200 shadow-sm">
+        <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+        <h2 className="text-xl font-bold text-gray-900 mb-2">Result Data Unavailable</h2>
+        <p className="text-gray-600 mb-6">There was an issue loading your assessment results.</p>
+        <Button onClick={onStartNew}>Return to Dashboard</Button>
+      </div>
+    );
+  }
+
   const getScoreColor = (score) => {
     if (score >= 75) return 'text-green-600';
     if (score >= 60) return 'text-yellow-600';

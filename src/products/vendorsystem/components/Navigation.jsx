@@ -17,7 +17,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
       <div className="vs-nav-container">
         <div className="vs-nav-left">
           <div className="vs-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
-            <span>VendorHub</span>
+            <span>Vendor Hub</span>
           </div>
         </div>
         <div className="vs-nav-links">

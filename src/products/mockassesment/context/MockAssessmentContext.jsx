@@ -27,13 +27,13 @@ export const MockAssessmentProvider = ({ children }) => {
       try {
         const data = await mockAssessment.list();
         setAssessments(data);
-        
+
         // Calculate performance data from fetched assessments
         const completed = data.filter(a => a.status === 'completed' && a.result);
         if (completed.length > 0) {
           const totalAssessments = completed.length;
           const averageScore = completed.reduce((acc, a) => acc + a.result.score.percentage, 0) / totalAssessments;
-          
+
           const skillScores = {};
           completed.forEach(a => {
             Object.entries(a.result.topicScores).forEach(([topic, topicResult]) => {
@@ -85,7 +85,7 @@ export const MockAssessmentProvider = ({ children }) => {
     }
 
     const duration = calculateDuration(questions.length, difficulty);
-    
+
     try {
       const newAssessment = await mockAssessment.create({
         jobRole,
@@ -387,7 +387,8 @@ const generateQuestions = async (jobRole, topic, difficulty, existingQuestions =
       return getFallbackQuestions(count, topics, difficulty, jobRole);
     }
 
-    return uniqueQuestions;
+    // Ensure we return exactly the requested count
+    return uniqueQuestions.slice(0, count);
   } catch (error) {
     console.error("Error generating questions with Gemini API:", error);
     return getFallbackQuestions(count, topics, difficulty, jobRole);
