@@ -59,10 +59,10 @@ export const VendorProvider = ({ children }) => {
           } else {
             // Default mock data if everything is empty
             const mockVendors = [
-              { name: 'Google Cloud', category: 'Infrastructure', status: 'Active', monthlySpend: 1250, renewalDate: '2026-05-15', contactEmail: 'billing@google.com', owner: 'IT Ops', billingCycle: 'Monthly', supportLevel: 'Enterprise' },
-              { name: 'Slack', category: 'Communication', status: 'Active', monthlySpend: 480, renewalDate: '2026-03-20', contactEmail: 'accounts@slack.com', owner: 'HR Team', billingCycle: 'Monthly', supportLevel: 'Business' },
-              { name: 'GitHub', category: 'Development', status: 'Active', monthlySpend: 210, renewalDate: '2026-08-10', contactEmail: 'support@github.com', owner: 'Dev Team', billingCycle: 'Monthly', supportLevel: 'Premium' },
-              { name: 'Zoom', category: 'Communication', status: 'Active', monthlySpend: 150, renewalDate: '2026-01-28', contactEmail: 'billing@zoom.us', owner: 'Admin', billingCycle: 'Monthly', supportLevel: 'Pro' }
+              { name: 'Google Cloud', category: 'Infrastructure', status: 'Active', monthlySpend: 1250, renewalDate: '2026-05-15T00:00:00.000Z', contactEmail: 'billing@google.com', owner: 'IT Ops', billingCycle: 'Monthly', supportLevel: 'Enterprise' },
+              { name: 'Slack', category: 'Communication', status: 'Active', monthlySpend: 480, renewalDate: '2026-03-20T00:00:00.000Z', contactEmail: 'accounts@slack.com', owner: 'HR Team', billingCycle: 'Monthly', supportLevel: 'Business' },
+              { name: 'GitHub', category: 'Development', status: 'Active', monthlySpend: 210, renewalDate: '2026-08-10T00:00:00.000Z', contactEmail: 'support@github.com', owner: 'Dev Team', billingCycle: 'Monthly', supportLevel: 'Premium' },
+              { name: 'Zoom', category: 'Communication', status: 'Active', monthlySpend: 150, renewalDate: '2026-01-28T00:00:00.000Z', contactEmail: 'billing@zoom.us', owner: 'Admin', billingCycle: 'Monthly', supportLevel: 'Pro' }
             ]
             for (const v of mockVendors) await vendorApi.vendors.create(v)
             
